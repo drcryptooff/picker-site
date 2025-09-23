@@ -70,7 +70,7 @@ a{color:var(--text);text-decoration:none}
   letter-spacing:.02em;
   margin:0;
   line-height:.78;
-  color:#E42828;            /* rouge */
+  color:#ffffff;            /* rouge */
   opacity:.45;
   text-align:center;
   text-shadow:
@@ -201,6 +201,7 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
+
 
 
 
