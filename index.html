@@ -133,10 +133,35 @@
       </div>
     </div>
   </footer>
+  <script>
+(function(){
+  const scope = document.querySelector(".crosshair");
+  const actor = document.querySelector(".masc");
+  if(!scope || !actor) return;
+
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  if (!isTouch) {
+    // Parallax souris (desktop)
+    document.addEventListener("mousemove", e => {
+      const dx = (e.clientX / window.innerWidth - 0.5);
+      const dy = (e.clientY / window.innerHeight - 0.5);
+      scope.style.transform = `translate(${dx*30}px, ${dy*30}px)`;
+      actor.style.transform = `translate(${dx*12}px, ${dy*12}px)`;
+    });
+  } else {
+    // Fallback mobile (pas de souris) : petites animations
+    scope.classList.add("pulse");
+    actor.classList.add("float");
+  }
+})();
+</script>
+
 </body>
 </html>
 </body>
 </html>
+
 
 
 
