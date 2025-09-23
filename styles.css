@@ -40,7 +40,6 @@ a{color:var(--text);text-decoration:none}
 /* Menu (droite) — lisible et sur une seule ligne en mobile */
 .mainnav{gap:14px}
 .mainnav a{
-  font-family: Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   font-weight:600;
   text-transform:uppercase;
   letter-spacing:.06em;
@@ -56,30 +55,35 @@ a{color:var(--text);text-decoration:none}
 .btn.ghost:hover{color:#fff}
 
 /* === HERO === */
-.hero{position:relative;overflow:hidden}
+.hero{
+  position:relative;
+  overflow:visible;            /* évite de couper le "R" de PICKER */
+}
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
 
-/* TITRE GÉANT (derrière) — plus gros & rouge */
+/* TITRE GÉANT (derrière) — rouge, visible mais non coupé */
 .wordmark{
-  font-size:20vw;           /* plus gros */
+  /* Adapté à toutes tailles d’écran sans couper les bords */
+  font-size:clamp(72px, 18vw, 240px);
   font-weight:1000;
   letter-spacing:.02em;
   margin:0;
   line-height:.78;
   color:#E42828;            /* rouge */
-  opacity:.18;              /* léger voile pour ne pas écraser le reste */
+  opacity:.18;
+  text-align:center;
   text-shadow:
     0 0 22px rgba(228,40,40,.35),
     0 0 4px rgba(255,255,255,.15);
 }
 
-/* Pile (mascotte + viseur) — plus petite */
+/* Pile (mascotte + viseur) — plus petite par défaut */
 .stack{
   position:relative;
-  width:260px;              /* réduit */
+  width:260px;
   height:260px;
-  margin:-60px auto 12px;
+  margin:-48px auto 12px;
 }
 .masc{
   position:absolute;inset:0;margin:auto;
@@ -87,6 +91,7 @@ a{color:var(--text);text-decoration:none}
   object-fit:contain;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));
   z-index:1;                /* derrière le viseur */
+  will-change: transform;
 }
 .crosshair{
   position:absolute;inset:0;margin:auto;
@@ -94,6 +99,7 @@ a{color:var(--text);text-decoration:none}
   filter:drop-shadow(0 6px 18px rgba(0,0,0,.6));
   opacity:.95;
   z-index:2;                /* devant la mascotte */
+  will-change: transform;
 }
 
 .tagline{max-width:760px;margin:8px auto 0;color:var(--muted);font-size:18px}
@@ -140,27 +146,38 @@ h3{font-size:18px}
 /* Footer */
 .footer{padding:24px 0;border-top:1px solid var(--line);color:#9a9a9a}
 
+/* === Animations (fallback mobile) === */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.95; }
+}
+@keyframes floaty {
+  0% { transform: translateY(0) }
+  50% { transform: translateY(-6px) }
+  100% { transform: translateY(0) }
+}
+.crosshair.pulse { animation: pulse 3s ease-in-out infinite }
+.masc.float { animation: floaty 4s ease-in-out infinite }
+
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
-  .wordmark{font-size:28vw}
-  .stack{width:200px;height:200px;margin:-40px auto 8px}
+  .stack{width:220px;height:220px;margin:-40px auto 8px}
 }
-
 @media (max-width:600px){
   .favicon{width:16px;height:16px}
   .brand{font-size:14px; letter-spacing:.04em}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
+  .wordmark{font-size:clamp(56px, 22vw, 200px)}   /* plus petit pour ne pas couper le "R" */
 }
-
 @media (max-width:480px){
-  .stack{width:160px;height:160px;margin:-30px auto 6px}
-  .wordmark{font-size:32vw}
+  .stack{width:180px;height:180px;margin:-28px auto 6px}
   .mainnav{gap:8px}
   .mainnav a{font-size:10.5px}
+  .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
-
 
 
 
