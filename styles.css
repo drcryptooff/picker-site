@@ -71,11 +71,12 @@ a{color:var(--text);text-decoration:none}
   margin:0;
   line-height:.78;
   color:#E42828;            /* rouge */
-  opacity:.18;
+  opacity:.45;
   text-align:center;
   text-shadow:
-    0 0 22px rgba(228,40,40,.35),
-    0 0 4px rgba(255,255,255,.15);
+    0 0 12px rgba(228,40,40,.75),
+    0 0 28px rgba(228,40,40,.55),
+    0 0 6px rgba(255,255,255,.25);
 }
 
 /* Pile (mascotte + viseur) — plus petite par défaut */
@@ -200,6 +201,7 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
+
 
 
 
