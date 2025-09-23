@@ -2,12 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Picker — Tokenized Treasury of Agents</title>
+  <meta name="description" content="Picker is a tokenized treasury of agents. Passive blue-chip base + active high-risk picks. Returns fuel $PICKER buybacks. Fully on-chain.">
+  <meta property="og:title" content="Picker — Tokenized Treasury of Agents">
+  <meta property="og:description" content="Buy once. Picker does the rest. Passive core + active alpha. On-chain buybacks.">
+  <link rel="icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <h1>Welcome to Picker</h1>
-  <p>Picker is a tokenized treasury of agents. Returns fuel $PICKER buybacks.</p>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container row between center">
+      <div class="row center gap">
+        <img src="assets/crosshair-white.png" alt="Picker" class="logo">
+        <strong>Picker</strong>
+      </div>
+      <nav class="row gap">
+        <a href="#how">How it works</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#treasury">Treasury</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a class="btn" target="_blank" href="https://x.com/yourpicker">X</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container center col gap">
+      <h1>Picker — a tokenized treasury of agents</h1>
+      <p class="sub">Passive blue-chip base + active high-risk picks. Returns fuel $PICKER buybacks. Fully on-chain.</p>
+      <div class="row gap">
+        <!-- TODO: remplace # par ton deep link Uniswap -->
+        <a class="btn primary" target="_blank" href="#">Buy $PICKER</a>
+        <a class="btn outline" href="#treasury">View Treasury</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="block">
+    <div class="container">
+      <h2 id="how">How it works</h2>
+      <div class="grid3">
+        <div class="card"><h3>1) Fees</h3><p>Protocol fees accrue to the treasury.</p></div>
+        <div class="card"><h3>2) Buy Agents</h3><p>Picker acquires Core (passive) + Alpha (active) per fixed rules.</p></div>
+        <div class="card"><h3>3) Buybacks</h3><p>Agent profits are used to buy back $PICKER.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SPLIT -->
+  <section class="block alt">
+    <div class="container">
+      <h2 id="portfolio">Portfolio split</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3>Core (Passive)</h3>
+          <ul>
+            <li>Target weight: 70%</li>
+            <li>Criteria: revenue, liquidity, longevity</li>
+            <li>Rebalance: monthly</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Alpha (Active)</h3>
+          <ul>
+            <li>Target weight: 30%</li>
+            <li>Signals: growth, traction, momentum</li>
+            <li>Rotation: bi-weekly</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREASURY EMBED -->
+  <section class="block">
+    <div class="container">
+      <h2 id="treasury">On-chain treasury</h2>
+      <p>Live holdings, flows and buybacks. Fully transparent.</p>
+      <div class="embed">
+        <!-- TODO: colle ici l'URL d'embed Dune/GeckoTerminal -->
+        <iframe src="#" loading="lazy" title="Treasury Dashboard"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENOMICS -->
+  <section class="block alt">
+    <div class="container">
+      <h2 id="tokenomics">$PICKER tokenomics (short)</h2>
+      <ul class="cols">
+        <li>Supply: TBA</li>
+        <li>Sale allocation: TBA</li>
+        <li>Team: lock + vesting</li>
+        <li>Buybacks: recurring with agent profits</li>
+        <li>Chain: TBA</li>
+        <li>Contract: 0x…</li>
+      </ul>
+      <p class="disclaimer">Not financial advice. Smart-contract & market risks apply.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container row between">
+      <span>© Picker</span>
+      <div class="row gap">
+        <a target="_blank" href="https://x.com/yourpicker">X</a>
+        <a target="_blank" href="#">Docs</a>
+        <a target="_blank" href="#">Audit</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
