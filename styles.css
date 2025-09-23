@@ -94,24 +94,23 @@ a{color:var(--text);text-decoration:none}
 }
 /* Bigger, brighter PICKER title */
 .wordmark{
-  font-size:16vw;
+  font-size:20vw;             /* plus gros (était 16vw) */
   font-weight:1000;
   letter-spacing:.02em;
   margin:0;
   line-height:.78;
-  color:#fff;
-  opacity:.22; /* was lower */
+  color:#E42828;              /* rouge vif */
+  opacity:.18;                /* légèrement transparent */
   text-shadow:
-    0 0 28px rgba(228,40,40,.22),
-    0 0 2px rgba(255,255,255,.38),
-    0 1px 0 rgba(0,0,0,.35); /* subtle outline */
+    0 0 22px rgba(228,40,40,.35),
+    0 0 4px rgba(255,255,255,.15);
 }
 @media (max-width: 600px){
   .wordmark{ font-size:24vw; opacity:.26 }
 }
 
 /* Pile visuelle (mascotte derrière, viseur devant) */
-.stack{ position:relative; width:420px; height:420px; margin:-140px auto 12px }
+.stack{ position:relative; width:260px; height:260px; margin:-140px auto 12px }
 .masc{
   position:absolute; inset:0; margin:auto; width:82%; height:82%;
   object-fit:contain; filter:drop-shadow(0 8px 16px rgba(0,0,0,.45)); z-index:1;
@@ -170,6 +169,15 @@ h3{font-size:18px}
 @media (max-width:900px){
   .stack { width:280px; height:280px; margin:-100px auto 8px }
 }
+@media (max-width:900px){
+  .stack{ width:200px; height:200px; margin:-40px auto 8px }
+  .wordmark{ font-size:28vw; }
+}
+@media (max-width:480px){
+  .stack{ width:160px; height:160px; margin:-30px auto 6px }
+  .wordmark{ font-size:32vw; }
+}
+
 
 
 
