@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Picker — Tokenized Treasury of Agents</title>
   <meta name="description" content="Picker is a tokenized treasury of agents. Passive blue-chip base + active high-risk picks. Returns fuel $PICKER buybacks. Fully on-chain.">
-  <meta property="og:title" content="Picker — Tokenized Treasury of Agents">
-  <meta property="og:description" content="Buy once. Picker does the rest. Passive core + active alpha. On-chain buybacks.">
+  <link rel="stylesheet" href="styles.css?v=2"/>
   <link rel="icon" href="assets/favicon.ico">
-  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body>
+<body class="dark">
   <!-- NAV -->
   <header class="nav">
     <div class="container row between center">
       <div class="row center gap">
-        <img src="assets/crosshair-white.png" alt="Picker" class="logo">
+        <span class="mark"></span>
         <strong>Picker</strong>
       </div>
       <nav class="row gap">
@@ -23,37 +21,52 @@
         <a href="#portfolio">Portfolio</a>
         <a href="#treasury">Treasury</a>
         <a href="#tokenomics">Tokenomics</a>
-        <a class="btn" target="_blank" href="https://x.com/yourpicker">X</a>
+        <a class="btn ghost" target="_blank" href="https://x.com/yourpicker">X</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="container center col gap">
-      <h1>Picker — a tokenized treasury of agents</h1>
-      <p class="sub">Passive blue-chip base + active high-risk picks. Returns fuel $PICKER buybacks. Fully on-chain.</p>
-      <div class="row gap">
-        <!-- TODO: remplace # par ton deep link Uniswap -->
+  <section class="hero hero--banner">
+    <div class="container hero-inner">
+      <h1 class="wordmark">PICKER</h1>
+      <div class="stack">
+        <img class="crosshair" src="assets/crosshair-red.svg" alt="crosshair">
+        <img class="masc" src="assets/mascot.png" alt="mascot">
+      </div>
+      <p class="tagline">A tokenized treasury of agents — buy once, Picker does the rest.</p>
+      <div class="row gap cta">
         <a class="btn primary" target="_blank" href="#">Buy $PICKER</a>
         <a class="btn outline" href="#treasury">View Treasury</a>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- HOW -->
   <section class="block">
     <div class="container">
       <h2 id="how">How it works</h2>
       <div class="grid3">
-        <div class="card"><h3>1) Fees</h3><p>Protocol fees accrue to the treasury.</p></div>
-        <div class="card"><h3>2) Buy Agents</h3><p>Picker acquires Core (passive) + Alpha (active) per fixed rules.</p></div>
-        <div class="card"><h3>3) Buybacks</h3><p>Agent profits are used to buy back $PICKER.</p></div>
+        <div class="card">
+          <div class="dot"></div>
+          <h3>Fees</h3>
+          <p>Protocol fees accrue to the treasury.</p>
+        </div>
+        <div class="card">
+          <div class="dot"></div>
+          <h3>Buy Agents</h3>
+          <p>Core (passive) + Alpha (active) per fixed rules.</p>
+        </div>
+        <div class="card">
+          <div class="dot"></div>
+          <h3>Buybacks</h3>
+          <p>Agent profits fund recurring $PICKER buybacks.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO SPLIT -->
+  <!-- PORTFOLIO -->
   <section class="block alt">
     <div class="container">
       <h2 id="portfolio">Portfolio split</h2>
@@ -78,14 +91,13 @@
     </div>
   </section>
 
-  <!-- TREASURY EMBED -->
+  <!-- TREASURY -->
   <section class="block">
     <div class="container">
       <h2 id="treasury">On-chain treasury</h2>
-      <p>Live holdings, flows and buybacks. Fully transparent.</p>
+      <p class="muted">Live holdings, flows and buybacks.</p>
       <div class="embed">
-        <!-- TODO: colle ici l'URL d'embed Dune/GeckoTerminal -->
-        <iframe src="#" loading="lazy" title="Treasury Dashboard"></iframe>
+        <iframe src="#" title="Treasury Dashboard" loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -98,7 +110,7 @@
         <li>Supply: TBA</li>
         <li>Sale allocation: TBA</li>
         <li>Team: lock + vesting</li>
-        <li>Buybacks: recurring with agent profits</li>
+        <li>Buybacks: recurring</li>
         <li>Chain: TBA</li>
         <li>Contract: 0x…</li>
       </ul>
@@ -118,3 +130,4 @@
   </footer>
 </body>
 </html>
+
