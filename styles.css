@@ -71,7 +71,7 @@ a{color:var(--text);text-decoration:none}
   margin:0;
   line-height:.78;
   color:#E42828;            /* rouge */
-  opacity:.8;
+  opacity:.45;
   text-align:center;
   text-shadow:
     0 0 12px rgba(228,40,40,.75),
@@ -201,10 +201,6 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
-
-
-
-
 
 
 
