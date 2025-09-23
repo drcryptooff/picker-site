@@ -6,7 +6,7 @@
   --muted:#b3b3b3;
   --line:#222;
   --accent:#C61C1C;
-  --accent-hi:#E42828; /* rouge viseur / titre PICKER */
+  --accent-hi:#ffffff; /* rouge viseur / titre PICKER */
 }
 
 /* === Base === */
@@ -201,6 +201,7 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
+
 
 
 
