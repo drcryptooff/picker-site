@@ -146,51 +146,28 @@ h3{font-size:18px}
 /* Footer */
 .footer{padding:24px 0;border-top:1px solid var(--line);color:#9a9a9a}
 
-/* Accessibilité : désactiver les anims si l’utilisateur le préfère */
-@media (prefers-reduced-motion: reduce) {
-  .crosshair, .masc { animation: none !important; }
-}
-
-/* === Keyframes === */
-@keyframes lockon {
-  0%   { transform: scale(2); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
+/* === Animations simples === */
 @keyframes pulse {
   0%   { transform: scale(1); opacity: 0.95; }
   50%  { transform: scale(1.06); opacity: 1; }
   100% { transform: scale(1); opacity: 0.95; }
 }
-@keyframes fadeIn {
-  0%   { opacity: 0; transform: translateY(6px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+
 @keyframes shake {
   0%   { transform: translateX(-3px); }
   100% { transform: translateX(3px); }
 }
 
-/* === Crosshair : lock-on (1x) puis pulse (infini) === */
+/* Viseur = pulse infini */
 .crosshair {
-  /* Deux animations enchaînées */
-  animation-name: lockon, pulse;
-  animation-duration: 1.4s, 3s;
-  animation-timing-function: ease-out, ease-in-out;
-  animation-delay: 0s, 1.4s;              /* le pulse commence après le lock-on */
-  animation-iteration-count: 1, infinite;
-  animation-fill-mode: forwards, none;     /* garder l’état final du lock-on */
+  animation: pulse 3s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
-/* === Mascotte : apparition puis micro-tremblement === */
+/* Mascotte = tremblement infini */
 .masc {
-  animation-name: fadeIn, shake;
-  animation-duration: 0.8s, 0.6s;
-  animation-timing-function: ease-out, ease-in-out;
-  animation-delay: 0.8s, 1.6s;             /* arrive après le lock-on du viseur */
-  animation-iteration-count: 1, infinite;
-  animation-direction: normal, alternate;  /* secousse gauche-droite alternée */
-  will-change: transform, opacity;
+  animation: shake 0.6s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 /* Mobile : animations un peu plus douces */
@@ -223,6 +200,7 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
+
 
 
 
