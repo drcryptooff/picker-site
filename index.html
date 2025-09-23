@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Picker — Tokenized Treasury of Agents</title>
   <meta name="description" content="Picker is a tokenized treasury of agents. Passive blue-chip base + active high-risk picks. Returns fuel $PICKER buybacks. Fully on-chain.">
-  <link rel="stylesheet" href="styles.css?v=2"/>
+  <link rel="stylesheet" href="styles.css?v=3"/>
+  <!-- Assure-toi que le fichier s'appelle bien assets/favicone.png -->
   <link rel="icon" href="assets/favicone.png">
 </head>
 <body class="dark">
@@ -13,10 +14,11 @@
   <header class="nav">
     <div class="container row between center">
       <div class="row center gap">
-        <span class="mark"></span>
-        <strong>Picker</strong>
+        <!-- favicon à gauche, à la place du cercle -->
+        <img class="favicon" src="assets/favicone.png" alt="Picker icon">
+        <strong class="brand">Picker</strong>
       </div>
-      <nav class="row gap">
+      <nav class="row gap mainnav">
         <a href="#how">How it works</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#treasury">Treasury</a>
@@ -29,11 +31,17 @@
   <!-- HERO -->
   <section class="hero hero--banner">
     <div class="container hero-inner">
+      <!-- Titre plus visible -->
       <h1 class="wordmark">PICKER</h1>
+
+      <!-- Pile visuelle : mascotte derrière, viseur devant -->
       <div class="stack">
-        <img class="crosshair" src="assets/crosshairbalnc.png" alt="crosshair">
+        <!-- mascotte DERRIÈRE -->
         <img class="masc" src="assets/mascotpeur.png" alt="mascot">
+        <!-- viseur DEVANT (blanc) -->
+        <img class="crosshair" src="assets/crosshairbalnc.png" alt="crosshair">
       </div>
+
       <p class="tagline">A tokenized treasury of agents — buy once, Picker does the rest.</p>
       <div class="row gap cta">
         <a class="btn primary" target="_blank" href="#">Buy $PICKER</a>
@@ -130,5 +138,3 @@
   </footer>
 </body>
 </html>
-
-
