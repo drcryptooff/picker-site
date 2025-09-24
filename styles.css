@@ -67,10 +67,11 @@ a{color:var(--text);text-decoration:none}
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
-  margin: 0;
+  margin: 0 auto; 
+  text-align: center;          /* centre le texte */
   line-height: .78;
   color: #E42828; /* Rouge plein */
-  opacity: 1;     /* 100% visible */
+  opacity: .8;     /* 100% visible */
 
   /* Glow intense */
   text-shadow:
@@ -202,53 +203,38 @@ h3{font-size:18px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
 /* Conteneur */
-.embed.placeholder{
-  position:relative;
-  border:1px solid var(--line);
-  border-radius:18px;
-  overflow:hidden;
-  background:#0c0c0c;
+.embed.placeholder {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0c0c0c;
 }
 
-/* Iframe Dune — floutée + assombrie */
-.embed.placeholder .dune-bg{
-  width:100%;
-  height:520px;
-  border:0;
-  display:block;
-  filter:blur(6px) brightness(0.5);
-  pointer-events:none; /* pas cliquable */
-}
-
-/* Fallback visuel si l’iframe ne s’affiche pas (bloquée par X-Frame-Options) */
-.embed.placeholder .dune-fallback{
-  position:absolute; inset:0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
-    url('assets/dune-fallback.jpg') center/cover no-repeat;
-  opacity:0;           /* caché par défaut */
-  transition:opacity .3s ease;
-  pointer-events:none;
+/* Screenshot Dune flouté */
+.embed.placeholder .dune-fallback {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  filter: blur(6px) brightness(0.5);
 }
 
 /* Texte centré */
-.embed.placeholder .overlay-text{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  color:#f5f5f5;
-  font-size:28px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  text-align:center;
-  text-shadow:0 0 12px rgba(0,0,0,.8);
-  pointer-events:none;
+.embed.placeholder .overlay-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f5f5f5;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(0,0,0,.8);
+  pointer-events: none;
 }
 
-/* Astuce CSS : si l’iframe ne charge pas visuellement, on peut forcer le fallback manuellement en ajoutant la classe .no-iframe au conteneur */
-.embed.placeholder.no-iframe .dune-fallback{ opacity:1; }
-.embed.placeholder.no-iframe .dune-bg{ display:none; }
+
 
 
 
