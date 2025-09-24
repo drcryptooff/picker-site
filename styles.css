@@ -74,11 +74,10 @@ a{color:var(--text);text-decoration:none}
   opacity: .8;     /* 100% visible */
 
   /* Glow intense */
-  text-shadow:
-    0 0 12px rgba(228,40,40,0.9),
-    0 0 28px rgba(228,40,40,0.6),
-    0 0 48px rgba(228,40,40,0.4),
-    0 0 72px rgba(255,255,255,0.25);
+text-shadow:
+    0 0 8px rgba(228,40,40,0.5),
+    0 0 16px rgba(228,40,40,0.35),
+    0 0 28px rgba(255,255,255,0.2);
 }
 /* Pile (mascotte + viseur) — plus petite par défaut */
 .stack{
@@ -233,6 +232,7 @@ h3{font-size:18px}
   text-shadow: 0 0 12px rgba(0,0,0,.8);
   pointer-events: none;
 }
+
 
 
 
