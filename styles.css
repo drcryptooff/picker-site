@@ -64,20 +64,6 @@ a{color:var(--text);text-decoration:none}
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
 
-/* Lueur ambiante globale, pas collée au PNG */
-.hero::before{
-  content:"";
-  position:absolute;
-  left:-10%; right:-10%;
-  top:-22%; height:64%;
-  background:
-    radial-gradient(40% 55% at 50% 30%, rgba(158,24,24,.30), rgba(0,0,0,0) 60%),
-    radial-gradient(28% 40% at 50% 14%, rgba(122,18,18,.22), rgba(0,0,0,0) 55%);
-  filter: blur(36px);
-  z-index:0;
-  pointer-events:none;
-}
-
 /* (Compat éventuelle si tu remets un H1 texte) */
 .wordmark {
   font-size: clamp(72px, 20vw, 260px);
@@ -100,16 +86,21 @@ a{color:var(--text);text-decoration:none}
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 .wordmark-vhs{
-  --w: clamp(560px, 86vw, 1600px);  /* BEAUCOUP plus large */
+  --w: clamp(560px, 86vw, 1600px);
   position: relative;
   width: var(--w);
   margin: 0 auto -6px;
-  z-index:1;                        /* sous la mascotte */
+  z-index:1;
   user-select: none;
-  isolation:isolate;                /* fix blends iOS */
+  isolation:isolate;
+  text-align:center;    /* force centrage */
 }
 .wordmark-vhs .wm{
-  display:block; width:100%; height:auto; position:relative; image-rendering:auto;
+  display:block;
+  margin:0 auto;        /* centre bien l’image */
+  width:100%;
+  height:auto;
+  position:relative;
 }
 .wordmark-vhs .wm.base{
   opacity:.78;
@@ -347,3 +338,4 @@ h3{font-size:18px}
     opacity: .38;
   }
 }
+
