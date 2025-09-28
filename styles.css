@@ -5,8 +5,9 @@
   --text:#f5f5f5;
   --muted:#b3b3b3;
   --line:#222;
-  --accent:#C61C1C;
-  --accent-hi:#E42828; /* rouge viseur / titre PICKER */
+  /* Rouge plus foncé */
+  --accent:#8F1515;
+  --accent-hi:#B61C1C; /* était #E42828 */
 }
 
 /* === Base === */
@@ -44,7 +45,7 @@ a{color:var(--text);text-decoration:none}
   text-transform:uppercase;
   letter-spacing:.06em;
   font-size:13px;
-  white-space:nowrap; /* empêche de passer sur 2 lignes */
+  white-space:nowrap;
   opacity:.9;
 }
 .mainnav a:hover{opacity:1}
@@ -57,54 +58,127 @@ a{color:var(--text);text-decoration:none}
 /* === HERO === */
 .hero{
   position:relative;
-  overflow:visible;            /* évite de couper le "R" de PICKER */
+  overflow:visible;
 }
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
+
+/* Lueur ambiante globale (pas collée au PNG) */
+.hero::before{
+  content:"";
+  position:absolute;
+  left:-10%; right:-10%;
+  top:-20%; height:60%;
+  background:
+    radial-gradient(40% 55% at 50% 30%, rgba(182,28,28,.28), rgba(0,0,0,0) 60%),
+    radial-gradient(28% 40% at 50% 15%, rgba(143,21,21,.22), rgba(0,0,0,0) 55%);
+  filter: blur(36px);
+  z-index:0;
+  pointer-events:none;
+}
 
 /* (Ancien titre texte .wordmark laissé pour compat) */
 .wordmark {
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
-  margin: 0 auto; 
+  margin: 0 auto;
   text-align: center;
   line-height: .78;
-  color: #E42828;
+  color: var(--accent-hi);
   opacity: .8;
   text-shadow:
-    0 0 8px rgba(228,40,40,0.5),
-    0 0 16px rgba(228,40,40,0.35),
-    0 0 28px rgba(255,255,255,0.2);
+    0 0 8px rgba(182,28,28,0.35),
+    0 0 16px rgba(182,28,28,0.25),
+    0 0 28px rgba(255,255,255,0.12);
 }
 
-/* Pile (mascotte + viseur) — plus petite par défaut */
+/* Titre image (PNG) + glitch (adouci) */
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.wordmark-vhs{
+  --w: clamp(420px, 60vw, 980px);
+  position: relative;
+  width: var(--w);
+  margin: 0 auto -4px;
+  z-index:1;                        /* sous la mascotte */
+  user-select: none;
+}
+.wordmark-vhs .wm{
+  display:block; width:100%; height:auto; position:relative; image-rendering:auto;
+}
+.wordmark-vhs .wm.base{
+  opacity:.78;
+  filter: brightness(.84) contrast(.92);
+}
+/* Aberrations chromatiques adoucies */
+.wordmark-vhs .wm.r,
+.wordmark-vhs .wm.b{
+  position:absolute; inset:0; mix-blend-mode:screen; opacity:.45; pointer-events:none;
+}
+.wordmark-vhs .wm.r{ animation: chromaR 3.2s steps(12) infinite; }
+.wordmark-vhs .wm.b{ animation: chromaB 3.2s steps(12) infinite; }
+/* Glitch en tranches doux */
+.wordmark-vhs .slices{
+  position:absolute; inset:0;
+  background-image: url("assets/wordmark.png");
+  background-size:100% auto; background-repeat:no-repeat;
+  mix-blend-mode:lighten; opacity:.65; pointer-events:none;
+  animation: sliceShift 2.4s infinite;
+}
+/* Scanlines + bruit légers */
+.wordmark-vhs .scanlines{
+  position:absolute; inset:-2px 0 0 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px,
+    rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px
+  );
+  opacity:.18; pointer-events:none; animation: vScroll 6s linear infinite;
+}
+.wordmark-vhs .noise{
+  position:absolute; inset:-4px;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.12), transparent 60%),
+    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.1), transparent 60%);
+  mix-blend-mode:soft-light; opacity:.35; pointer-events:none;
+  animation: noise 1.2s steps(6) infinite;
+}
+
+/* Pile (mascotte + viseur) — remontée et au-dessus du titre */
 .stack{
   position:relative;
   width:260px;
   height:260px;
-  margin:-48px auto 12px;
+  margin:-96px auto 12px;          /* plus haut pour chevaucher le PNG */
+  z-index:3;                        /* au-dessus du titre */
 }
 .masc{
   position:absolute;inset:0;margin:auto;
   width:78%;height:78%;
   object-fit:contain;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));
-  z-index:1;                /* derrière le viseur */
-  will-change: transform;
+  z-index:1;
+  animation: shake 0.6s ease-in-out infinite alternate;
 }
 .crosshair{
   position:absolute;inset:0;margin:auto;
   width:100%;height:100%;
   filter:drop-shadow(0 6px 18px rgba(0,0,0,.6));
   opacity:.95;
-  z-index:2;                /* devant la mascotte */
-  will-change: transform;
+  z-index:2;
+  animation: pulse 3s ease-in-out infinite;
 }
 
 .tagline{max-width:760px;margin:8px auto 0;color:var(--muted);font-size:18px}
 .cta{margin-top:18px}
-.btn.primary{background:linear-gradient(180deg,var(--accent-hi),var(--accent));border-color:transparent;color:#fff}
+.btn.primary{
+  background:linear-gradient(180deg,var(--accent-hi),var(--accent));
+  border-color:transparent;color:#fff
+}
 .btn.primary:hover{filter:brightness(1.05)}
 .btn.outline{background:transparent;border-color:#3a3a3a}
 
@@ -131,7 +205,7 @@ h3{font-size:18px}
 .card .dot{
   width:10px;height:10px;border-radius:50%;
   background:var(--accent-hi);
-  box-shadow:0 0 18px var(--accent);
+  box-shadow:0 0 14px rgba(182,28,28,.65); /* glow plus sombre */
   margin-bottom:8px;
 }
 
@@ -152,22 +226,9 @@ h3{font-size:18px}
   50%  { transform: scale(1.06); opacity: 1; }
   100% { transform: scale(1); opacity: 0.95; }
 }
-
 @keyframes shake {
   0%   { transform: translateX(-3px); }
   100% { transform: translateX(3px); }
-}
-
-/* Viseur = pulse infini */
-.crosshair {
-  animation: pulse 3s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-/* Mascotte = tremblement infini */
-.masc {
-  animation: shake 0.6s ease-in-out infinite alternate;
-  will-change: transform;
 }
 
 /* Mobile : animations un peu plus douces */
@@ -186,17 +247,20 @@ h3{font-size:18px}
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
-  .stack{width:220px;height:220px;margin:-40px auto 8px}
+  .stack{width:240px;height:240px;margin:-80px auto 10px;}
 }
 @media (max-width:600px){
   .favicon{width:16px;height:16px}
   .brand{font-size:14px; letter-spacing:.04em}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
-  .wordmark{font-size:clamp(56px, 22vw, 200px)}   /* plus petit pour ne pas couper le "R" */
+  .wordmark{font-size:clamp(56px, 22vw, 200px)}
+  /* S'assurer que mascotte + crosshair restent visibles en mobile */
+  .stack{width:210px;height:210px;margin:-56px auto 8px; z-index:4;}
+  .wordmark-vhs{ --w: clamp(260px, 72vw, 520px); z-index:1; }
 }
 @media (max-width:480px){
-  .stack{width:180px;height:180px;margin:-28px auto 6px}
+  .stack{width:190px;height:190px;margin:-48px auto 6px}
   .mainnav{gap:8px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
@@ -234,110 +298,37 @@ h3{font-size:18px}
   pointer-events: none;
 }
 
-/* ===================================================== */
-/* ================== TITRE PNG + VHS ================== */
-/* ===================================================== */
-
-/* H1 caché (SEO/lecteurs d'écran) */
-.sr-only {
-  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
-
-/* Titre image avec effet VHS/glitch */
-.wordmark-vhs{
-  --w: clamp(420px, 60vw, 980px);
-  position: relative;
-  width: var(--w);
-  margin: 0 auto -8px;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,.55));
-  user-select: none;
-}
-
-.wordmark-vhs .wm{
-  display:block; width:100%; height:auto; position:relative; image-rendering:auto;
-}
-
-/* Calques aberration chromatique */
-.wordmark-vhs .wm.r,
-.wordmark-vhs .wm.b{
-  position:absolute; inset:0; mix-blend-mode:screen; opacity:.7; pointer-events:none;
-}
-
-.wordmark-vhs .wm.r{
-  filter: drop-shadow(0 0 0 rgba(255,0,0,0));
-  animation: chromaR 2.4s steps(12) infinite;
-}
-.wordmark-vhs .wm.b{
-  filter: drop-shadow(0 0 0 rgba(0,128,255,0));
-  animation: chromaB 2.4s steps(12) infinite;
-}
-
-/* Tranches glitch (repeint l'image en background) */
-.wordmark-vhs .slices{
-  position:absolute; inset:0;
-  background-image: url("assets/wordmark.png");
-  background-size:100% auto; background-repeat:no-repeat;
-  mix-blend-mode:lighten; opacity:.9; pointer-events:none;
-  animation: sliceShift 1.8s infinite;
-}
-
-/* Scanlines CRT */
-.wordmark-vhs .scanlines{
-  position:absolute; inset:-2px 0 0 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px,
-    rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px
-  );
-  opacity:.35; pointer-events:none; animation: vScroll 6s linear infinite;
-}
-
-/* Bruit VHS léger */
-.wordmark-vhs .noise{
-  position:absolute; inset:-4px;
-  background:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.12), transparent 60%),
-    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.1), transparent 60%);
-  mix-blend-mode:soft-light; opacity:.5; pointer-events:none;
-  animation: noise 1.2s steps(6) infinite;
-}
-
-/* Animations de base */
+/* ===== Glitch keyframes ===== */
 @keyframes chromaR{
-  0%,100%{transform:translate(0,0); filter:hue-rotate(0) saturate(1.1)}
-  20%{transform:translate(1px,-1px); filter:hue-rotate(-8deg) saturate(1.3)}
-  40%{transform:translate(-2px,1px); filter:hue-rotate(-12deg) saturate(1.5)}
-  60%{transform:translate(2px,0); filter:hue-rotate(-5deg) saturate(1.2)}
-  80%{transform:translate(-1px,1px); filter:hue-rotate(-10deg) saturate(1.4)}
+  0%,100%{transform:translate(0,0); filter:hue-rotate(0) saturate(1.05)}
+  20%{transform:translate(1px,-1px); filter:hue-rotate(-6deg) saturate(1.2)}
+  40%{transform:translate(-2px,1px); filter:hue-rotate(-10deg) saturate(1.3)}
+  60%{transform:translate(2px,0); filter:hue-rotate(-4deg) saturate(1.15)}
+  80%{transform:translate(-1px,1px); filter:hue-rotate(-8deg) saturate(1.25)}
 }
 @keyframes chromaB{
-  0%,100%{transform:translate(0,0); filter:hue-rotate(0) saturate(1.1)}
-  20%{transform:translate(-1px,1px); filter:hue-rotate(12deg) saturate(1.3)}
-  40%{transform:translate(2px,-1px); filter:hue-rotate(18deg) saturate(1.5)}
-  60%{transform:translate(-2px,0); filter:hue-rotate(8deg) saturate(1.2)}
-  80%{transform:translate(1px,-1px); filter:hue-rotate(16deg) saturate(1.4)}
+  0%,100%{transform:translate(0,0); filter:hue-rotate(0) saturate(1.05)}
+  20%{transform:translate(-1px,1px); filter:hue-rotate(10deg) saturate(1.2)}
+  40%{transform:translate(2px,-1px); filter:hue-rotate(14deg) saturate(1.3)}
+  60%{transform:translate(-2px,0); filter:hue-rotate(6deg) saturate(1.15)}
+  80%{transform:translate(1px,-1px); filter:hue-rotate(12deg) saturate(1.25)}
 }
 @keyframes sliceShift{
   0%{clip-path:polygon(0 0,100% 0,100% 18%,0 18%); transform:translateX(0)}
-  8%{clip-path:polygon(0 18%,100% 18%,100% 22%,0 22%); transform:translateX(2px)}
-  16%{clip-path:polygon(0 40%,100% 40%,100% 46%,0 46%); transform:translateX(-3px)}
-  24%{clip-path:polygon(0 52%,100% 52%,100% 58%,0 58%); transform:translateX(4px)}
-  32%{clip-path:polygon(0 66%,100% 66%,100% 72%,0 72%); transform:translateX(-2px)}
-  40%{clip-path:polygon(0 80%,100% 80%,100% 86%,0 86%); transform:translateX(3px)}
-  48%{clip-path:polygon(0 20%,100% 20%,100% 26%,0 26%); transform:translateX(-4px)}
-  56%{clip-path:polygon(0 32%,100% 32%,100% 38%,0 38%); transform:translateX(5px)}
-  64%{clip-path:polygon(0 74%,100% 74%,100% 78%,0 78%); transform:translateX(-3px)}
-  72%{clip-path:polygon(0 8%,100% 8%,100% 12%,0 12%); transform:translateX(3px)}
-  80%{clip-path:polygon(0 88%,100% 88%,100% 92%,0 92%); transform:translateX(-5px)}
-  88%{clip-path:polygon(0 60%,100% 60%,100% 64%,0 64%); transform:translateX(2px)}
+  10%{clip-path:polygon(0 20%,100% 20%,100% 24%,0 24%); transform:translateX(2px)}
+  22%{clip-path:polygon(0 42%,100% 42%,100% 48%,0 48%); transform:translateX(-3px)}
+  34%{clip-path:polygon(0 56%,100% 56%,100% 62%,0 62%); transform:translateX(4px)}
+  46%{clip-path:polygon(0 66%,100% 66%,100% 72%,0 72%); transform:translateX(-2px)}
+  58%{clip-path:polygon(0 82%,100% 82%,100% 86%,0 86%); transform:translateX(3px)}
+  70%{clip-path:polygon(0 28%,100% 28%,100% 32%,0 32%); transform:translateX(-3px)}
+  82%{clip-path:polygon(0 10%,100% 10%,100% 14%,0 14%); transform:translateX(3px)}
+  94%{clip-path:polygon(0 60%,100% 60%,100% 64%,0 64%); transform:translateX(2px)}
   100%{clip-path:polygon(0 0,100% 0,100% 18%,0 18%); transform:translateX(0)}
 }
 @keyframes vScroll{
-  0%{transform:translateY(0); opacity:.35}
-  50%{transform:translateY(2px); opacity:.25}
-  100%{transform:translateY(0); opacity:.35}
+  0%{transform:translateY(0); opacity:.18}
+  50%{transform:translateY(2px); opacity:.12}
+  100%{transform:translateY(0); opacity:.18}
 }
 @keyframes noise{
   0%{transform:translate(0,0) scale(1)}
@@ -348,67 +339,14 @@ h3{font-size:18px}
   100%{transform:translate(0,0) scale(1)}
 }
 
-/* Responsive pour le titre image */
-.hero .wordmark-vhs{ margin-bottom:6px; }
-@media (max-width:900px){ .wordmark-vhs{ --w: clamp(300px, 70vw, 620px); } }
-@media (max-width:600px){ .wordmark-vhs{ --w: clamp(240px, 72vw, 520px); } }
-
-/* Respect des préférences utilisateur */
+/* Accessibilité : reduce motion */
 @media (prefers-reduced-motion: reduce){
   .wordmark-vhs .wm.r,
   .wordmark-vhs .wm.b,
   .wordmark-vhs .slices,
   .wordmark-vhs .scanlines,
-  .wordmark-vhs .noise{
+  .wordmark-vhs .noise,
+  .crosshair, .masc {
     animation:none !important; transform:none !important;
   }
-  .wordmark-vhs .scanlines{ opacity:.18; }
 }
-
-/* ===================================================== */
-/* ====== SOFT MODE : réduire l’intensité du blanc ===== */
-/* ===================================================== */
-
-.wordmark-vhs{ --intensity: .8; }
-.wordmark-vhs .wm.base{
-  opacity: .78;
-  filter: brightness(.84) contrast(.92);
-}
-
-/* Aberrations plus légères + plus lentes */
-.wordmark-vhs .wm.r,
-.wordmark-vhs .wm.b{ opacity:.45; }
-.wordmark-vhs .wm.r{ animation-duration: 3.2s; }
-.wordmark-vhs .wm.b{ animation-duration: 3.2s; }
-
-/* Glitch en tranches plus discret */
-.wordmark-vhs .slices{
-  opacity: .65;
-  animation-duration: 2.4s;
-}
-
-/* Scanlines & bruit atténués */
-.wordmark-vhs .scanlines{ opacity: .18; }
-.wordmark-vhs .noise{ opacity: .35; }
-
-/* Vignette + teinte rouge légère pour calmer le blanc */
-.wordmark-vhs::after{
-  content:"";
-  position:absolute; inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(120% 120% at 50% 50%, rgba(230,40,40,.18), rgba(0,0,0,0) 60%),
-    radial-gradient(90% 60% at 50% 40%, rgba(0,0,0,.22), rgba(0,0,0,0) 55%);
-  mix-blend-mode: multiply;
-}
-
-/* Mobile : encore plus doux */
-@media (max-width:600px){
-  .wordmark-vhs .wm.base{ opacity:.74; filter: brightness(.8) contrast(.9); }
-  .wordmark-vhs .wm.r, .wordmark-vhs .wm.b{ opacity:.4; }
-  .wordmark-vhs .scanlines{ opacity:.14; }
-}
-
-
-
-
