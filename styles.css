@@ -288,6 +288,17 @@ h3{font-size:18px}
   100% { transform: translateY(0) rotate(0deg) scale(1); }
 }
 
+/* Moins de marge en haut pour mobile */
+@media (max-width: 600px){
+  .hero--banner{
+    padding: 48px 0 36px; /* réduit le padding top et bottom */
+  }
+}
+@media (max-width: 400px){
+  .hero--banner{
+    padding: 36px 0 28px; /* encore plus compact sur très petits écrans */
+  }
+
 
 
 
