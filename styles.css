@@ -265,7 +265,7 @@ h3{font-size:18px}
 
 /* Léger ghost RGB façon CRT (subtil) */
 .wordmark::after{
-  content:"";
+   content:none;
   position:absolute; inset:0;
   pointer-events:none;
   background: url("assets/titre-picker.svg") center/contain no-repeat;
@@ -325,6 +325,7 @@ h3{font-size:18px}
   .wordmark::after,
   .wordmark img{ animation:none !important; filter:none !important; }
 }
+
 
 
 
