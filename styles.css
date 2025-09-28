@@ -5,9 +5,9 @@
   --text:#f5f5f5;
   --muted:#b3b3b3;
   --line:#222;
-  /* Rouge plus foncé */
-  --accent:#8F1515;
-  --accent-hi:#B61C1C; /* était #E42828 */
+  /* Rouge un peu plus foncé */
+  --accent:#7A1212;
+  --accent-hi:#9E1818;
 }
 
 /* === Base === */
@@ -38,7 +38,7 @@ a{color:var(--text);text-decoration:none}
 .brand{font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .favicon{width:18px;height:18px;border-radius:4px;object-fit:cover}
 
-/* Menu (droite) — lisible et sur une seule ligne en mobile */
+/* Menu */
 .mainnav{gap:14px}
 .mainnav a{
   font-weight:600;
@@ -59,25 +59,26 @@ a{color:var(--text);text-decoration:none}
 .hero{
   position:relative;
   overflow:visible;
+  isolation:isolate; /* corrige les blends sur iOS et gère le stacking */
 }
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
 
-/* Lueur ambiante globale (pas collée au PNG) */
+/* Lueur ambiante globale, pas collée au PNG */
 .hero::before{
   content:"";
   position:absolute;
   left:-10%; right:-10%;
-  top:-20%; height:60%;
+  top:-22%; height:64%;
   background:
-    radial-gradient(40% 55% at 50% 30%, rgba(182,28,28,.28), rgba(0,0,0,0) 60%),
-    radial-gradient(28% 40% at 50% 15%, rgba(143,21,21,.22), rgba(0,0,0,0) 55%);
+    radial-gradient(40% 55% at 50% 30%, rgba(158,24,24,.30), rgba(0,0,0,0) 60%),
+    radial-gradient(28% 40% at 50% 14%, rgba(122,18,18,.22), rgba(0,0,0,0) 55%);
   filter: blur(36px);
   z-index:0;
   pointer-events:none;
 }
 
-/* (Ancien titre texte .wordmark laissé pour compat) */
+/* (Compat éventuelle si tu remets un H1 texte) */
 .wordmark {
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
@@ -88,23 +89,24 @@ a{color:var(--text);text-decoration:none}
   color: var(--accent-hi);
   opacity: .8;
   text-shadow:
-    0 0 8px rgba(182,28,28,0.35),
-    0 0 16px rgba(182,28,28,0.25),
-    0 0 28px rgba(255,255,255,0.12);
+    0 0 8px rgba(158,24,24,0.3),
+    0 0 16px rgba(158,24,24,0.22),
+    0 0 28px rgba(255,255,255,0.1);
 }
 
-/* Titre image (PNG) + glitch (adouci) */
+/* ===== Titre image (PNG) + glitch adouci ===== */
 .sr-only {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 .wordmark-vhs{
-  --w: clamp(420px, 60vw, 980px);
+  --w: clamp(560px, 86vw, 1600px);  /* BEAUCOUP plus large */
   position: relative;
   width: var(--w);
-  margin: 0 auto -4px;
+  margin: 0 auto -6px;
   z-index:1;                        /* sous la mascotte */
   user-select: none;
+  isolation:isolate;                /* fix blends iOS */
 }
 .wordmark-vhs .wm{
   display:block; width:100%; height:auto; position:relative; image-rendering:auto;
@@ -125,7 +127,7 @@ a{color:var(--text);text-decoration:none}
   position:absolute; inset:0;
   background-image: url("assets/wordmark.png");
   background-size:100% auto; background-repeat:no-repeat;
-  mix-blend-mode:lighten; opacity:.65; pointer-events:none;
+  mix-blend-mode:lighten; opacity:.55; pointer-events:none;
   animation: sliceShift 2.4s infinite;
 }
 /* Scanlines + bruit légers */
@@ -136,7 +138,7 @@ a{color:var(--text);text-decoration:none}
     rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px,
     rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px
   );
-  opacity:.18; pointer-events:none; animation: vScroll 6s linear infinite;
+  opacity:.16; pointer-events:none; animation: vScroll 6s linear infinite;
 }
 .wordmark-vhs .noise{
   position:absolute; inset:-4px;
@@ -144,16 +146,16 @@ a{color:var(--text);text-decoration:none}
     radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.12), transparent 60%),
     radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.08), transparent 60%),
     radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.1), transparent 60%);
-  mix-blend-mode:soft-light; opacity:.35; pointer-events:none;
+  mix-blend-mode:soft-light; opacity:.32; pointer-events:none;
   animation: noise 1.2s steps(6) infinite;
 }
 
-/* Pile (mascotte + viseur) — remontée et au-dessus du titre */
+/* ===== Mascotte + crosshair (au-dessus du titre) ===== */
 .stack{
   position:relative;
   width:260px;
   height:260px;
-  margin:-96px auto 12px;          /* plus haut pour chevaucher le PNG */
+  margin:-128px auto 14px;          /* chevauche davantage le titre */
   z-index:3;                        /* au-dessus du titre */
 }
 .masc{
@@ -205,7 +207,7 @@ h3{font-size:18px}
 .card .dot{
   width:10px;height:10px;border-radius:50%;
   background:var(--accent-hi);
-  box-shadow:0 0 14px rgba(182,28,28,.65); /* glow plus sombre */
+  box-shadow:0 0 14px rgba(158,24,24,.55); /* glow plus sombre */
   margin-bottom:8px;
 }
 
@@ -231,42 +233,28 @@ h3{font-size:18px}
   100% { transform: translateX(3px); }
 }
 
-/* Mobile : animations un peu plus douces */
-@media (max-width: 600px) {
-  @keyframes pulse {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.04); }
-    100% { transform: scale(1); }
-  }
-  @keyframes shake {
-    0%   { transform: translateX(-2px); }
-    100% { transform: translateX(2px); }
-  }
-}
-
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
-  .stack{width:240px;height:240px;margin:-80px auto 10px;}
+  .stack{width:240px;height:240px;margin:-110px auto 12px;}
 }
 @media (max-width:600px){
   .favicon{width:16px;height:16px}
   .brand{font-size:14px; letter-spacing:.04em}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
-  .wordmark{font-size:clamp(56px, 22vw, 200px)}
-  /* S'assurer que mascotte + crosshair restent visibles en mobile */
-  .stack{width:210px;height:210px;margin:-56px auto 8px; z-index:4;}
-  .wordmark-vhs{ --w: clamp(260px, 72vw, 520px); z-index:1; }
+
+  /* Titre très large mais adapté mobile */
+  .wordmark-vhs{ --w: clamp(300px, 88vw, 720px); z-index:1; }
+
+  /* S'assurer que mascotte + crosshair s'affichent bien au-dessus */
+  .stack{width:220px;height:220px;margin:-84px auto 10px; z-index:4;}
 }
 @media (max-width:480px){
-  .stack{width:190px;height:190px;margin:-48px auto 6px}
-  .mainnav{gap:8px}
-  .mainnav a{font-size:10.5px}
-  .wordmark{font-size:clamp(48px, 24vw, 180px)}
+  .stack{width:200px;height:200px;margin:-76px auto 10px; z-index:4;}
 }
 
-/* Conteneur */
+/* Conteneur placeholder */
 .embed.placeholder {
   position: relative;
   border: 1px solid var(--line);
@@ -274,16 +262,12 @@ h3{font-size:18px}
   overflow: hidden;
   background: #0c0c0c;
 }
-
-/* Screenshot Dune flouté */
 .embed.placeholder .dune-fallback {
   width: 100%;
   height: 520px;
   object-fit: cover;
   filter: blur(6px) brightness(0.5);
 }
-
-/* Texte centré */
 .embed.placeholder .overlay-text {
   position: absolute;
   top: 50%; left: 50%;
@@ -326,9 +310,9 @@ h3{font-size:18px}
   100%{clip-path:polygon(0 0,100% 0,100% 18%,0 18%); transform:translateX(0)}
 }
 @keyframes vScroll{
-  0%{transform:translateY(0); opacity:.18}
+  0%{transform:translateY(0); opacity:.16}
   50%{transform:translateY(2px); opacity:.12}
-  100%{transform:translateY(0); opacity:.18}
+  100%{transform:translateY(0); opacity:.16}
 }
 @keyframes noise{
   0%{transform:translate(0,0) scale(1)}
@@ -348,5 +332,18 @@ h3{font-size:18px}
   .wordmark-vhs .noise,
   .crosshair, .masc {
     animation:none !important; transform:none !important;
+  }
+}
+
+/* ==== iOS Safari fallback pour mix-blend-mode (assure l'affichage) ==== */
+@supports (-webkit-touch-callout: none) {
+  .wordmark-vhs .wm.r,
+  .wordmark-vhs .wm.b {
+    mix-blend-mode: normal;  /* au lieu de screen si bug WebKit */
+    opacity: .28;
+  }
+  .wordmark-vhs .slices {
+    mix-blend-mode: normal;
+    opacity: .38;
   }
 }
