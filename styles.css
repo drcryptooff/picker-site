@@ -62,23 +62,22 @@ a{color:var(--text);text-decoration:none}
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
 
-/* TITRE GÉANT (derrière) — rouge, visible mais non coupé */
+/* (Ancien titre texte .wordmark laissé pour compat) */
 .wordmark {
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
   margin: 0 auto; 
-  text-align: center;          /* centre le texte */
+  text-align: center;
   line-height: .78;
-  color: #E42828; /* Rouge plein */
-  opacity: .8;     /* 100% visible */
-
-  /* Glow intense */
-text-shadow:
+  color: #E42828;
+  opacity: .8;
+  text-shadow:
     0 0 8px rgba(228,40,40,0.5),
     0 0 16px rgba(228,40,40,0.35),
     0 0 28px rgba(255,255,255,0.2);
 }
+
 /* Pile (mascotte + viseur) — plus petite par défaut */
 .stack{
   position:relative;
@@ -183,6 +182,7 @@ h3{font-size:18px}
     100% { transform: translateX(2px); }
   }
 }
+
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
@@ -201,6 +201,7 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
+
 /* Conteneur */
 .embed.placeholder {
   position: relative;
@@ -234,7 +235,7 @@ h3{font-size:18px}
 }
 
 /* ===================================================== */
-/* ================== AJOUTS POUR LE PNG =============== */
+/* ================== TITRE PNG + VHS ================== */
 /* ===================================================== */
 
 /* H1 caché (SEO/lecteurs d'écran) */
@@ -303,7 +304,7 @@ h3{font-size:18px}
   animation: noise 1.2s steps(6) infinite;
 }
 
-/* Animations */
+/* Animations de base */
 @keyframes chromaR{
   0%,100%{transform:translate(0,0); filter:hue-rotate(0) saturate(1.1)}
   20%{transform:translate(1px,-1px); filter:hue-rotate(-8deg) saturate(1.3)}
@@ -352,7 +353,7 @@ h3{font-size:18px}
 @media (max-width:900px){ .wordmark-vhs{ --w: clamp(300px, 70vw, 620px); } }
 @media (max-width:600px){ .wordmark-vhs{ --w: clamp(240px, 72vw, 520px); } }
 
-/* Respecte les préférences utilisateur */
+/* Respect des préférences utilisateur */
 @media (prefers-reduced-motion: reduce){
   .wordmark-vhs .wm.r,
   .wordmark-vhs .wm.b,
@@ -364,18 +365,19 @@ h3{font-size:18px}
   .wordmark-vhs .scanlines{ opacity:.18; }
 }
 
-/* ====== AJUSTEMENT : titre PNG trop blanc -> version soft ====== */
+/* ===================================================== */
+/* ====== SOFT MODE : réduire l’intensité du blanc ===== */
+/* ===================================================== */
+
 .wordmark-vhs{ --intensity: .8; }
 .wordmark-vhs .wm.base{
-  opacity: .78;                    /* moins lumineux */
+  opacity: .78;
   filter: brightness(.84) contrast(.92);
 }
 
-/* Aberrations chromatiques + légères + plus lentes */
+/* Aberrations plus légères + plus lentes */
 .wordmark-vhs .wm.r,
-.wordmark-vhs .wm.b{
-  opacity: .45;
-}
+.wordmark-vhs .wm.b{ opacity:.45; }
 .wordmark-vhs .wm.r{ animation-duration: 3.2s; }
 .wordmark-vhs .wm.b{ animation-duration: 3.2s; }
 
@@ -389,7 +391,7 @@ h3{font-size:18px}
 .wordmark-vhs .scanlines{ opacity: .18; }
 .wordmark-vhs .noise{ opacity: .35; }
 
-/* Légère teinte rouge + vignette sombre pour calmer le blanc */
+/* Vignette + teinte rouge légère pour calmer le blanc */
 .wordmark-vhs::after{
   content:"";
   position:absolute; inset:0;
