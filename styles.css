@@ -67,9 +67,10 @@ a{color:var(--text);text-decoration:none}
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
-  margin: 0 auto -12px; 
+  margin: 0 auto -16px; 
   text-align: center;          /* centre le texte */
   line-height: .78;
+  position: relative;
   color: #E42828; /* Rouge plein */
   opacity: .8;     /* 100% visible */
 
@@ -233,26 +234,160 @@ h3{font-size:18px}
   pointer-events: none;
 }
 /* Image de titre dans le hero (remplace le texte) */
-.wordmark img {
-  display: block;
-  margin: 0 auto;
-  width: clamp(240px, 60vw, 960px);
-  height: auto;
-  position: relative;
-  animation: glitch 2.5s infinite;
-}
-@keyframes glitch {
-  0% { transform: none; opacity: 1; }
-  8% { transform: translate(-2px, -1px) skewX(-10deg); opacity: .95; }
-  10% { transform: translate(2px, 1px) skewX(10deg); opacity: .9; filter: hue-rotate(20deg); }
-  12% { transform: none; opacity: 1; }
-  55% { transform: none; }
-  56% { transform: translate(-3px, 2px); opacity: .95; filter: hue-rotate(-15deg); }
-  57% { transform: translate(3px, -2px); opacity: .9; }
-  58% { transform: none; }
-  100% { transform: none; }
+.wordmark img{
+  display:block;
+  margin:0 auto;
+  width:clamp(320px, 70vw, 1080px);
+  height:auto;
+  /* chromatic aberration façon CRT */
+  filter:
+    contrast(1.08)
+    saturate(1.2)
+    drop-shadow(2px 0 0 rgba(255,0,0,.55))
+    drop-shadow(-2px 0 0 rgba(0,255,255,.55));
+  animation: vhs-jitter 2.4s steps(12,end) infinite;
+  transform-origin:center;
+  will-change: transform, filter;
 }
 
+/* Scanlines + vignette + flicker (au-dessus de l'image) */
+.wordmark::before{
+  content:"";
+  position:absolute;
+  inset:-2%;
+  pointer-events:none;
+  /* lignes horizontales + léger dégradé */
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,.22) 0px,
+      rgba(0,0,0,.22) 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.25));
+  mix-blend-mode:multiply;
+  animation: vhs-flicker 4.5s ease-in-out infinite, vhs-scan 6s linear infinite;
+  border-radius: 2px;
+}
+
+/* Slices décalées colorisées (duplique le SVG en overlay) */
+.wordmark::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url("assets/titre-picker.svg") center/contain no-repeat;
+  pointer-events:none;
+  mix-blend-mode:screen;
+  opacity:.9;
+  animation: vhs-slice 2.2s steps(10,end) infinite;
+  will-change: clip-path, transform, filter, opacity;
+  /* teinte globale très légère */
+  filter: hue-rotate(-6deg) saturate(1.1);
+}
+
+/* ===== Keyframes ===== */
+
+/* Micro-sauts, skew et petites secousses */
+@keyframes vhs-jitter{
+  0%   { transform:none; }
+  6%   { transform: translateX(1px) skewX(1deg); }
+  7%   { transform: translateX(-1px) skewX(-1deg); }
+  12%  { transform: translateY(0.5px); }
+  18%  { transform: translateX(2px) skewX(2deg); }
+  19%  { transform: translateX(-2px) skewX(-2deg); }
+  35%  { transform:none; }
+  36%  { transform: translateY(-1px) skewY(.6deg); }
+  60%  { transform:none; }
+  61%  { transform: translateX(1.5px); }
+  62%  { transform: translateX(-1.5px); }
+  80%  { transform:none; }
+  81%  { transform: translateY(1px); }
+  100% { transform:none; }
+}
+
+/* Lignes qui “défilent” + luminosité qui pompe */
+@keyframes vhs-scan{
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 0 6px, 0 0; }
+}
+@keyframes vhs-flicker{
+  0%, 100% { opacity: .95; }
+  10% { opacity: .85; }
+  11% { opacity: .6;  }
+  12% { opacity: .92; }
+  50% { opacity: .9;  }
+  51% { opacity: .75; }
+  70% { opacity: .93; }
+}
+
+/* Tranches aléatoires qui “décalent” horizontalement */
+@keyframes vhs-slice{
+  0%{
+    clip-path: inset(0 0 0 0);
+    transform:none;
+    filter:hue-rotate(-6deg);
+    opacity:.9;
+  }
+  8%{
+    clip-path: inset(12% 0 70% 0);
+    transform: translateX(-6px);
+    filter:hue-rotate(8deg);
+  }
+  12%{
+    clip-path: inset(60% 0 18% 0);
+    transform: translateX(7px);
+    filter:hue-rotate(-12deg);
+  }
+  16%{
+    clip-path: inset(28% 0 56% 0);
+    transform: translateX(-10px) skewX(-2deg);
+  }
+  20%{
+    clip-path: inset(46% 0 34% 0);
+    transform: translateX(9px);
+  }
+  24%{
+    clip-path: inset(6% 0 82% 0);
+    transform: translateX(-5px);
+  }
+  40%{
+    clip-path: inset(72% 0 10% 0);
+    transform: translateX(11px) skewX(1deg);
+  }
+  41%{
+    clip-path: inset(0 0 0 0);
+    transform:none;
+  }
+  58%{
+    clip-path: inset(18% 0 66% 0);
+    transform: translateX(-8px);
+  }
+  62%{
+    clip-path: inset(64% 0 20% 0);
+    transform: translateX(10px) skewX(-1deg);
+  }
+  75%{
+    clip-path: inset(32% 0 50% 0);
+    transform: translateX(-12px);
+    opacity:.95;
+  }
+  76%{
+    clip-path: inset(0 0 0 0);
+    transform:none;
+    opacity:.9;
+  }
+  100%{
+    clip-path: inset(0 0 0 0);
+    transform:none;
+  }
+}
+
+/* Option : réduire l’intensité si l’utilisateur préfère moins d’animations */
+@media (prefers-reduced-motion: reduce){
+  .wordmark::after,
+  .wordmark::before,
+  .wordmark img{ animation:none !important; filter:none !important; }
+}
 
 
 
