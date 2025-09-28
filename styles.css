@@ -234,100 +234,57 @@ h3{font-size:18px}
   pointer-events: none;
 }
 /* Image de titre dans le hero (remplace le texte) */
+/* Désactiver les overlays/anciennes couches si elles existaient */
+.wordmark::before,
+.wordmark::after{ content:none !important; }
+
+/* Le SVG (titre) — centré, plus grand et avec glow */
 .wordmark img{
   display:block;
   margin:0 auto;
-  width: clamp(320px, 70vw, 1080px); /* plus gros mais responsive */
+  width: clamp(320px, 70vw, 1080px);
   height:auto;
-  filter: url(#badTV) contrast(1.06) saturate(1.12);
-  animation: crt-jitter 2.2s steps(10, end) infinite;
-  transform-origin:center;
-  will-change: transform, filter;
+
+  /* Glow néon (mono-couleur, pas d'aberration chromatique) */
+  filter:
+    drop-shadow(0 0 6px  rgba(228,40,40,0.7))
+    drop-shadow(0 0 14px rgba(228,40,40,0.55))
+    drop-shadow(0 0 28px rgba(228,40,40,0.35));
+
+  /* Flicker doux et aléatoire façon néon fatigué */
+  animation: neon-flicker 6.5s infinite both;
+  will-change: filter, opacity, transform;
 }
 
-/* Scanlines + vignette + flicker au-dessus (pas d’impact sur le layout) */
-.wordmark::before{
-  content:"";
-  position:absolute;
-  inset:-2%;
-  pointer-events:none;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(0,0,0,.22) 0px,
-      rgba(0,0,0,.22) 1px,
-      transparent 3px
-    ),
-    radial-gradient(120% 90% at 50% 50%, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.35) 70%);
-  mix-blend-mode:multiply;
-  animation: crt-flicker 4.5s ease-in-out infinite, crt-scan 6s linear infinite;
+/* Clignotement irrégulier + micro-souffle de luminosité */
+@keyframes neon-flicker{
+  /* allumé normal */
+  0%   { opacity: 1;   filter: drop-shadow(0 0 6px  rgba(228,40,40,0.7)) drop-shadow(0 0 14px rgba(228,40,40,0.55)) drop-shadow(0 0 28px rgba(228,40,40,0.35)); }
+  6%   { opacity: .96; filter: drop-shadow(0 0 8px  rgba(228,40,40,0.75)) drop-shadow(0 0 18px rgba(228,40,40,0.6))  drop-shadow(0 0 32px rgba(228,40,40,0.4)); }
+  /* petit hoquet */
+  7%   { opacity: .65; filter: drop-shadow(0 0 2px  rgba(228,40,40,0.35)) drop-shadow(0 0 6px  rgba(228,40,40,0.25)) drop-shadow(0 0 10px rgba(228,40,40,0.15)); }
+  8%   { opacity: .98; }
+  15%  { opacity: .92; }
+  /* micro-extinction */
+  22%  { opacity: .55; filter: drop-shadow(0 0 1px rgba(228,40,40,0.25)); }
+  23%  { opacity: .97; }
+  40%  { opacity: 1; }
+  /* souffle plus long (néon qui peine) */
+  55%  { opacity: .78; filter: drop-shadow(0 0 4px rgba(228,40,40,0.5)) drop-shadow(0 0 10px rgba(228,40,40,0.35)); }
+  56%  { opacity: .9; }
+  72%  { opacity: 1; }
+  /* double clignement court */
+  82%  { opacity: .6; }
+  84%  { opacity: .98; }
+  86%  { opacity: .62; }
+  88%  { opacity: 1; }
+  100% { opacity: 1; }
 }
 
-/* Léger ghost RGB façon CRT (subtil) */
-.wordmark::after{
-   content:none;
-  position:absolute; inset:0;
-  pointer-events:none;
-  background: url("assets/titre-picker.svg") center/contain no-repeat;
-  mix-blend-mode:screen;
-  opacity:.25;
-  transform: translateX(1px);
-  filter: hue-rotate(10deg);
-  animation: crt-ghost 2.8s steps(12,end) infinite;
-}
-
-/* Jitter / micro-sauts (ne remplace pas le filtre : il le complète) */
-@keyframes crt-jitter{
-  0%   { transform:none; }
-  6%   { transform: translateX(1px) skewX(1deg); }
-  7%   { transform: translateX(-1px) skewX(-1deg); }
-  12%  { transform: translateY(0.5px); }
-  18%  { transform: translateX(2px) skewX(2deg); }
-  19%  { transform: translateX(-2px) skewX(-2deg); }
-  35%  { transform:none; }
-  36%  { transform: translateY(-1px) skewY(.6deg); }
-  61%  { transform: translateX(1.5px); }
-  62%  { transform: translateX(-1.5px); }
-  81%  { transform: translateY(1px); }
-  100% { transform:none; }
-}
-
-/* Balayage vertical des scanlines */
-@keyframes crt-scan{
-  0%   { background-position: 0 0, 0 0; }
-  100% { background-position: 0 6px, 0 0; }
-}
-
-/* Variation de luminosité (flicker) */
-@keyframes crt-flicker{
-  0%, 100% { opacity:.95; }
-  10% { opacity:.85; }
-  11% { opacity:.6;  }
-  12% { opacity:.92; }
-  50% { opacity:.9;  }
-  51% { opacity:.75; }
-  70% { opacity:.93; }
-}
-
-/* Ghost RGB qui bouge légèrement */
-@keyframes crt-ghost{
-  0%   { opacity:.22; transform: translateX(0); }
-  10%  { opacity:.3;  transform: translateX(-1.5px); }
-  20%  { opacity:.18; transform: translateX(1.5px); }
-  40%  { opacity:.26; transform: translateX(-1px); }
-  60%  { opacity:.2;  transform: translateX(1px); }
-  100% { opacity:.22; transform: translateX(0); }
-}
-
-/* Respecte l’accessibilité (si l’utilisateur réduit les animations) */
+/* Accessibilité : moins d’animation si demandé par l’utilisateur */
 @media (prefers-reduced-motion: reduce){
-  .wordmark::before,
-  .wordmark::after,
-  .wordmark img{ animation:none !important; filter:none !important; }
+  .wordmark img{ animation: none; }
 }
-
-
-
 
 
 
