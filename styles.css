@@ -232,7 +232,40 @@ h3{font-size:18px}
   text-shadow: 0 0 12px rgba(0,0,0,.8);
   pointer-events: none;
 }
+/* Skip link (accessibilité) */
+.skiplink {
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+}
+.skiplink:focus {
+  position: fixed; left: 16px; top: 12px; width: auto; height:auto; 
+  background:#1b1b1b; color:#fff; padding:10px 12px; border-radius:10px; 
+  border:1px solid var(--line); z-index:1000;
+}
 
+/* Images : évite CLS (tu as mis width/height en HTML) + hints */
+.masc, .crosshair, .favicon { image-rendering:auto }
+
+/* Liens focus visibles (accessibilité clavier) */
+a:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent-hi);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Réduction globale des animations si l’utilisateur le souhaite */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Amélioration nav mobile : masquage scrollbars horizontales si overflow */
+@media (max-width: 600px) {
+  .mainnav { scrollbar-width: none; }
+  .mainnav::-webkit-scrollbar { display: none; }
+}
+
+/* Option : n’appliquer will-change que sur hover pour limiter le coût GPU */
+.stack:hover .crosshair,
+.stack:hover .masc { will-change: transform, opacity; }
 
 
 
