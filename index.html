@@ -36,23 +36,20 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero hero--banner">
-    <div class="container hero-inner">
-      <h1 class="wordmark" aria-label="PICKER">PICKER</h1>
+ <!-- Titre image avec effet VHS/glitch -->
+<h1 class="sr-only">PICKER</h1> <!-- SEO + accessibilité (caché visuellement) -->
 
-      <div class="stack" aria-hidden="true">
-        <img class="masc" src="assets/mascotpeur.png" width="260" height="260" alt="Mascot looking determined">
-        <img class="crosshair" src="assets/crosshairbalnc.png" width="260" height="260" alt="Red crosshair overlay">
-      </div>
-
-      <p class="tagline">The tokenized treasury of agents.</p>
-      <div class="row gap cta">
-        <a class="btn primary" target="_blank" rel="noopener" href="#buy">Buy $PICKER</a>
-        <a class="btn outline" href="#treasury">View Treasury</a>
-      </div>
-    </div>
-  </section>
+<div class="wordmark-vhs" role="img" aria-label="PICKER logo with VHS glitch">
+  <!-- calque principal -->
+  <img class="wm base" src="assets/wordmark.png" width="1200" height="320" alt="PICKER logo">
+  <!-- aberrations chromatiques -->
+  <img class="wm r" src="assets/wordmark.png" alt="" aria-hidden="true">
+  <img class="wm b" src="assets/wordmark.png" alt="" aria-hidden="true">
+  <!-- couches glitch -->
+  <span class="wm slices" aria-hidden="true"></span>
+  <span class="scanlines" aria-hidden="true"></span>
+  <span class="noise" aria-hidden="true"></span>
+</div>
   
   <!-- HOW -->
   <section class="block">
@@ -146,6 +143,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
