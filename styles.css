@@ -5,9 +5,8 @@
   --text:#f5f5f5;
   --muted:#b3b3b3;
   --line:#222;
-  /* Rouge un peu plus foncé */
-  --accent:#7A1212;
-  --accent-hi:#9E1818;
+  --accent:#C61C1C;
+  --accent-hi:#E42828; /* rouge viseur / titre PICKER */
 }
 
 /* === Base === */
@@ -18,7 +17,6 @@ body.dark{
   color:var(--text);
   font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
-
 a{color:var(--text);text-decoration:none}
 .container{max-width:1120px;margin:0 auto;padding:0 20px}
 .row{display:flex}
@@ -37,19 +35,17 @@ a{color:var(--text);text-decoration:none}
 }
 .brand{font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .favicon{width:18px;height:18px;border-radius:4px;object-fit:cover}
-
-/* Menu */
+/* Menu (droite) — lisible et sur une seule ligne en mobile */
 .mainnav{gap:14px}
 .mainnav a{
   font-weight:600;
   text-transform:uppercase;
   letter-spacing:.06em;
   font-size:13px;
-  white-space:nowrap;
+  white-space:nowrap; /* empêche de passer sur 2 lignes */
   opacity:.9;
 }
 .mainnav a:hover{opacity:1}
-
 /* boutons nav */
 .btn{padding:11px 16px;border-radius:14px;border:1px solid var(--line);font-weight:700}
 .btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
@@ -58,138 +54,58 @@ a{color:var(--text);text-decoration:none}
 /* === HERO === */
 .hero{
   position:relative;
-  overflow:visible;
-  isolation:isolate; /* fix blends iOS + stacking propre */
+  overflow:visible; /* évite de couper le "R" de PICKER */
 }
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
-
-/* Ancien titre texte (au cas où) */
-.wordmark{
-  font-size:clamp(72px,20vw,260px);
-  font-weight:1000;
-  letter-spacing:.02em;
-  margin:0 auto;
-  text-align:center;
-  line-height:.78;
-  color:var(--accent-hi);
-  opacity:.8;
+/* TITRE GÉANT (derrière) — rouge, visible mais non coupé */
+.wordmark {
+  font-size: clamp(72px, 20vw, 260px);
+  font-weight: 1000;
+  letter-spacing: .02em;
+  margin: 0 auto;
+  text-align: center; /* centre le texte */
+  line-height: .78;
+  color: #E42828; /* Rouge plein */
+  opacity: .8; /* 100% visible */
+  /* Glow intense */
+  text-shadow:
+    0 0 8px rgba(228,40,40,0.5),
+    0 0 16px rgba(228,40,40,0.35),
+    0 0 28px rgba(255,255,255,0.2);
 }
-
-/* ===== Titre image (PNG) + glitch — CENTRÉ ===== */
-.sr-only{
-  position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;
-  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
-}
-
-.wordmark-vhs{
-  --w: clamp(560px, 86vw, 1600px);  /* largeur cible */
-  position:relative;
-  width:100%;
-  margin:0 auto -6px;
-  z-index:1;                        /* sous la mascotte */
-  isolation:isolate;                /* évite bugs de blend sur iOS */
-}
-
-/* Wrapper centré qui sert de référence à TOUTES les couches */
-.wordmark-vhs .wm-wrap{
-  position:relative;
-  width:var(--w);
-  margin:0 auto;                    /* <<< centrage garanti */
-}
-
-/* base = en flux pour donner la hauteur au wrapper */
-.wordmark-vhs .wm.base{
-  display:block;
-  width:100%;
-  height:auto;
-  opacity:.78;
-  filter:brightness(.84) contrast(.92);
-}
-
-/* Toutes les couches overlay sont absolues à 100% du wrapper */
-.wordmark-vhs .wm.r,
-.wordmark-vhs .wm.b,
-.wordmark-vhs .slices,
-.wordmark-vhs .scanlines,
-.wordmark-vhs .noise{
-  position:absolute;left:0;top:0;width:100%;height:100%;
-  pointer-events:none;
-}
-
-/* Aberrations chromatiques adoucies */
-.wordmark-vhs .wm.r,
-.wordmark-vhs .wm.b{ mix-blend-mode:screen; opacity:.45; }
-.wordmark-vhs .wm.r{ animation:chromaR 3.2s steps(12) infinite; }
-.wordmark-vhs .wm.b{ animation:chromaB 3.2s steps(12) infinite; }
-
-/* Glitch en tranches doux (fond parfaitement centré) */
-.wordmark-vhs .slices{
-  background-image:url("assets/wordmark.png");
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  background-position:center center;
-  mix-blend-mode:lighten;
-  opacity:.55;
-  animation:sliceShift 2.4s infinite;
-}
-
-/* Scanlines + bruit légers */
-.wordmark-vhs .scanlines{
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px,
-    rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px
-  );
-  opacity:.16;
-  animation:vScroll 6s linear infinite;
-}
-.wordmark-vhs .noise{
-  background:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.12), transparent 60%),
-    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.1), transparent 60%);
-  mix-blend-mode:soft-light;
-  opacity:.32;
-  animation:noise 1.2s steps(6) infinite;
-}
-
-/* ===== Mascotte + crosshair (au-dessus du titre) ===== */
+/* Pile (mascotte + viseur) — plus petite par défaut */
 .stack{
   position:relative;
-  width:260px;height:260px;
-  margin:-128px auto 14px;          /* chevauche le titre */
-  z-index:3;                        /* au-dessus du wordmark */
+  width:260px;
+  height:260px;
+  margin:-48px auto 12px;
 }
 .masc{
   position:absolute;inset:0;margin:auto;
-  width:78%;height:78%;object-fit:contain;
+  width:78%;height:78%;
+  object-fit:contain;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));
-  z-index:1;
-  animation:shake .6s ease-in-out infinite alternate;
+  z-index:1; /* derrière le viseur */
+  will-change: transform;
 }
 .crosshair{
   position:absolute;inset:0;margin:auto;
   width:100%;height:100%;
   filter:drop-shadow(0 6px 18px rgba(0,0,0,.6));
   opacity:.95;
-  z-index:2;
-  animation:pulse 3s ease-in-out infinite;
+  z-index:2; /* devant la mascotte */
+  will-change: transform;
 }
-
 .tagline{max-width:760px;margin:8px auto 0;color:var(--muted);font-size:18px}
 .cta{margin-top:18px}
-.btn.primary{
-  background:linear-gradient(180deg,var(--accent-hi),var(--accent));
-  border-color:transparent;color:#fff
-}
+.btn.primary{background:linear-gradient(180deg,var(--accent-hi),var(--accent));border-color:transparent;color:#fff}
 .btn.primary:hover{filter:brightness(1.05)}
 .btn.outline{background:transparent;border-color:#3a3a3a}
 
 /* === Sections === */
 .block{padding:56px 0;border-top:1px solid var(--line)}
 .block.alt{background:#0f0f0f}
-
 h1,h2,h3{margin:0 0 12px}
 h2{font-size:28px}
 h3{font-size:18px}
@@ -209,67 +125,81 @@ h3{font-size:18px}
 .card .dot{
   width:10px;height:10px;border-radius:50%;
   background:var(--accent-hi);
-  box-shadow:0 0 14px rgba(158,24,24,.55);
+  box-shadow:0 0 18px var(--accent);
   margin-bottom:8px;
 }
 
-/* Embed */
+/* Embed (Dune/Gecko) */
 .embed{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0c0c0c}
 .embed iframe{width:100%;height:520px;border:0;display:block;background:#0c0c0c}
-.embed.placeholder{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0c0c0c}
-.embed.placeholder .dune-fallback{width:100%;height:520px;object-fit:cover;filter:blur(6px) brightness(0.5);}
-.embed.placeholder .overlay-text{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  color:#f5f5f5;font-size:28px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.08em;text-align:center;text-shadow:0 0 12px rgba(0,0,0,.8);pointer-events:none;
-}
 
-/* Tokenomics */
+/* Tokenomics list */
 .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;list-style:disc;padding-left:20px}
 .disclaimer{color:#8a8a8a;font-size:13px;margin-top:12px}
 
 /* Footer */
 .footer{padding:24px 0;border-top:1px solid var(--line);color:#9a9a9a}
 
-/* === Animations === */
-@keyframes pulse {0%{transform:scale(1);opacity:.95;}50%{transform:scale(1.06);opacity:1;}100%{transform:scale(1);opacity:.95;}}
-@keyframes shake {0%{transform:translateX(-3px);}100%{transform:translateX(3px);}}
-@keyframes chromaR{0%,100%{transform:translate(0,0);}20%{transform:translate(1px,-1px);}40%{transform:translate(-2px,1px);}60%{transform:translate(2px,0);}80%{transform:translate(-1px,1px);}}
-@keyframes chromaB{0%,100%{transform:translate(0,0);}20%{transform:translate(-1px,1px);}40%{transform:translate(2px,-1px);}60%{transform:translate(-2px,0);}80%{transform:translate(1px,-1px);}}
-@keyframes sliceShift{
-  0%{clip-path:polygon(0 0,100% 0,100% 18%,0 18%);}
-  20%{clip-path:polygon(0 40%,100% 40%,100% 44%,0 44%);}
-  40%{clip-path:polygon(0 60%,100% 60%,100% 64%,0 64%);}
-  60%{clip-path:polygon(0 80%,100% 80%,100% 84%,0 84%);}
-  80%{clip-path:polygon(0 20%,100% 20%,100% 24%,0 24%);}
-  100%{clip-path:polygon(0 0,100% 0,100% 18%,0 18%);}
+/* === Animations simples === */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.95; }
 }
-@keyframes vScroll{0%{transform:translateY(0);opacity:.16;}50%{transform:translateY(2px);opacity:.12;}100%{transform:translateY(0);opacity:.16;}}
-@keyframes noise{0%{transform:translate(0,0);}20%{transform:translate(-1px,1px);}40%{transform:translate(1px,-1px);}60%{transform:translate(0,1px);}80%{transform:translate(1px,0);}100%{transform:translate(0,0);}}
+@keyframes shake {
+  0% { transform: translateX(-3px); }
+  100% { transform: translateX(3px); }
+}
+/* Viseur = pulse infini */
+.crosshair {
+  animation: pulse 3s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+/* Mascotte = tremblement infini */
+.masc {
+  animation: shake 0.6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+/* Mobile : animations un peu plus douces */
+@media (max-width: 600px) {
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0% { transform: translateX(-2px); }
+    100% { transform: translateX(2px); }
+  }
+}
 
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
-  .stack{width:240px;height:240px;margin:-110px auto 12px;}
+  .stack{width:220px;height:220px;margin:-40px auto 8px}
 }
 @media (max-width:600px){
   .favicon{width:16px;height:16px}
   .brand{font-size:14px; letter-spacing:.04em}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
-
-  /* Titre centré et adapté mobile */
-  .wordmark-vhs{ --w: clamp(300px, 88vw, 720px); }
-  /* S'assurer que mascotte + crosshair s'affichent au-dessus */
-  .stack{width:220px;height:220px;margin:-84px auto 10px; z-index:4;}
+  .wordmark{font-size:clamp(56px, 22vw, 200px)} /* plus petit pour ne pas couper le "R" */
 }
 @media (max-width:480px){
-  .stack{width:200px;height:200px;margin:-76px auto 10px; z-index:4;}
+  .stack{width:180px;height:180px;margin:-28px auto 6px}
+  .mainnav{gap:8px}
+  .mainnav a{font-size:10.5px}
+  .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
 
-/* ==== Fallback iOS pour mix-blend-mode (assure l'affichage) ==== */
-@supports (-webkit-touch-callout: none) {
-  .wordmark-vhs .wm.r,
-  .wordmark-vhs .wm.b { mix-blend-mode:normal; opacity:.28; }
-  .wordmark-vhs .slices  { mix-blend-mode:normal; opacity:.38; }
+/* Conteneur */
+.embed.placeholder {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0c0c0c;
 }
+/* Screenshot Dune flouté */
+.embed.placeholder .dune-fallback {
+
