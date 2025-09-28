@@ -364,5 +364,49 @@ h3{font-size:18px}
   .wordmark-vhs .scanlines{ opacity:.18; }
 }
 
+/* ====== AJUSTEMENT : titre PNG trop blanc -> version soft ====== */
+.wordmark-vhs{ --intensity: .8; }
+.wordmark-vhs .wm.base{
+  opacity: .78;                    /* moins lumineux */
+  filter: brightness(.84) contrast(.92);
+}
+
+/* Aberrations chromatiques + légères + plus lentes */
+.wordmark-vhs .wm.r,
+.wordmark-vhs .wm.b{
+  opacity: .45;
+}
+.wordmark-vhs .wm.r{ animation-duration: 3.2s; }
+.wordmark-vhs .wm.b{ animation-duration: 3.2s; }
+
+/* Glitch en tranches plus discret */
+.wordmark-vhs .slices{
+  opacity: .65;
+  animation-duration: 2.4s;
+}
+
+/* Scanlines & bruit atténués */
+.wordmark-vhs .scanlines{ opacity: .18; }
+.wordmark-vhs .noise{ opacity: .35; }
+
+/* Légère teinte rouge + vignette sombre pour calmer le blanc */
+.wordmark-vhs::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 120% at 50% 50%, rgba(230,40,40,.18), rgba(0,0,0,0) 60%),
+    radial-gradient(90% 60% at 50% 40%, rgba(0,0,0,.22), rgba(0,0,0,0) 55%);
+  mix-blend-mode: multiply;
+}
+
+/* Mobile : encore plus doux */
+@media (max-width:600px){
+  .wordmark-vhs .wm.base{ opacity:.74; filter: brightness(.8) contrast(.9); }
+  .wordmark-vhs .wm.r, .wordmark-vhs .wm.b{ opacity:.4; }
+  .wordmark-vhs .scanlines{ opacity:.14; }
+}
+
+
 
 
