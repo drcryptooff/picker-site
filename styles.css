@@ -17,6 +17,7 @@ body.dark{
   color:var(--text);
   font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
+
 a{color:var(--text);text-decoration:none}
 .container{max-width:1120px;margin:0 auto;padding:0 20px}
 .row{display:flex}
@@ -35,6 +36,7 @@ a{color:var(--text);text-decoration:none}
 }
 .brand{font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .favicon{width:18px;height:18px;border-radius:4px;object-fit:cover}
+
 /* Menu (droite) — lisible et sur une seule ligne en mobile */
 .mainnav{gap:14px}
 .mainnav a{
@@ -46,6 +48,7 @@ a{color:var(--text);text-decoration:none}
   opacity:.9;
 }
 .mainnav a:hover{opacity:1}
+
 /* boutons nav */
 .btn{padding:11px 16px;border-radius:14px;border:1px solid var(--line);font-weight:700}
 .btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
@@ -54,22 +57,24 @@ a{color:var(--text);text-decoration:none}
 /* === HERO === */
 .hero{
   position:relative;
-  overflow:visible; /* évite de couper le "R" de PICKER */
+  overflow:visible;            /* évite de couper le "R" de PICKER */
 }
 .hero--banner{padding:84px 0 56px;border-bottom:1px solid var(--line)}
 .hero-inner{position:relative}
+
 /* TITRE GÉANT (derrière) — rouge, visible mais non coupé */
 .wordmark {
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
-  margin: 0 auto;
-  text-align: center; /* centre le texte */
+  margin: 0 auto; 
+  text-align: center;          /* centre le texte */
   line-height: .78;
   color: #E42828; /* Rouge plein */
-  opacity: .8; /* 100% visible */
+  opacity: .8;     /* 100% visible */
+
   /* Glow intense */
-  text-shadow:
+text-shadow:
     0 0 8px rgba(228,40,40,0.5),
     0 0 16px rgba(228,40,40,0.35),
     0 0 28px rgba(255,255,255,0.2);
@@ -86,7 +91,7 @@ a{color:var(--text);text-decoration:none}
   width:78%;height:78%;
   object-fit:contain;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));
-  z-index:1; /* derrière le viseur */
+  z-index:1;                /* derrière le viseur */
   will-change: transform;
 }
 .crosshair{
@@ -94,9 +99,10 @@ a{color:var(--text);text-decoration:none}
   width:100%;height:100%;
   filter:drop-shadow(0 6px 18px rgba(0,0,0,.6));
   opacity:.95;
-  z-index:2; /* devant la mascotte */
+  z-index:2;                /* devant la mascotte */
   will-change: transform;
 }
+
 .tagline{max-width:760px;margin:8px auto 0;color:var(--muted);font-size:18px}
 .cta{margin-top:18px}
 .btn.primary{background:linear-gradient(180deg,var(--accent-hi),var(--accent));border-color:transparent;color:#fff}
@@ -106,6 +112,7 @@ a{color:var(--text);text-decoration:none}
 /* === Sections === */
 .block{padding:56px 0;border-top:1px solid var(--line)}
 .block.alt{background:#0f0f0f}
+
 h1,h2,h3{margin:0 0 12px}
 h2{font-size:28px}
 h3{font-size:18px}
@@ -142,37 +149,40 @@ h3{font-size:18px}
 
 /* === Animations simples === */
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.95; }
-  50% { transform: scale(1.06); opacity: 1; }
+  0%   { transform: scale(1); opacity: 0.95; }
+  50%  { transform: scale(1.06); opacity: 1; }
   100% { transform: scale(1); opacity: 0.95; }
 }
+
 @keyframes shake {
-  0% { transform: translateX(-3px); }
+  0%   { transform: translateX(-3px); }
   100% { transform: translateX(3px); }
 }
+
 /* Viseur = pulse infini */
 .crosshair {
   animation: pulse 3s ease-in-out infinite;
   will-change: transform, opacity;
 }
+
 /* Mascotte = tremblement infini */
 .masc {
   animation: shake 0.6s ease-in-out infinite alternate;
   will-change: transform;
 }
+
 /* Mobile : animations un peu plus douces */
 @media (max-width: 600px) {
   @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.04); }
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.04); }
     100% { transform: scale(1); }
   }
   @keyframes shake {
-    0% { transform: translateX(-2px); }
+    0%   { transform: translateX(-2px); }
     100% { transform: translateX(2px); }
   }
 }
-
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
@@ -183,7 +193,7 @@ h3{font-size:18px}
   .brand{font-size:14px; letter-spacing:.04em}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
-  .wordmark{font-size:clamp(56px, 22vw, 200px)} /* plus petit pour ne pas couper le "R" */
+  .wordmark{font-size:clamp(56px, 22vw, 200px)}   /* plus petit pour ne pas couper le "R" */
 }
 @media (max-width:480px){
   .stack{width:180px;height:180px;margin:-28px auto 6px}
@@ -191,7 +201,6 @@ h3{font-size:18px}
   .mainnav a{font-size:10.5px}
   .wordmark{font-size:clamp(48px, 24vw, 180px)}
 }
-
 /* Conteneur */
 .embed.placeholder {
   position: relative;
@@ -200,6 +209,37 @@ h3{font-size:18px}
   overflow: hidden;
   background: #0c0c0c;
 }
+
 /* Screenshot Dune flouté */
 .embed.placeholder .dune-fallback {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  filter: blur(6px) brightness(0.5);
+}
+
+/* Texte centré */
+.embed.placeholder .overlay-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f5f5f5;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(0,0,0,.8);
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
 
