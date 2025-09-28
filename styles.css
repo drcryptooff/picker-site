@@ -5,8 +5,8 @@
   --text:#f5f5f5;
   --muted:#b3b3b3;
   --line:#222;
-  --accent:#C61C1C;
-  --accent-hi:#E42828; /* rouge viseur / titre PICKER */
+  --accent:#7a0000;
+  --accent-hi:#7a0000;
 }
 
 /* === Base === */
@@ -67,10 +67,11 @@ a{color:var(--text);text-decoration:none}
   font-size: clamp(72px, 20vw, 260px);
   font-weight: 1000;
   letter-spacing: .02em;
-  margin: 0 auto -16px; 
+  margin: 0 auto -20px; 
   text-align: center;          /* centre le texte */
   line-height: .78;
   position: relative;
+  z-index:1;
   color: #E42828; /* Rouge plein */
   opacity: .8;     /* 100% visible */
 
@@ -83,9 +84,10 @@ text-shadow:
 /* Pile (mascotte + viseur) — plus petite par défaut */
 .stack{
   position:relative;
+  z-index:3; 
   width:260px;
   height:260px;
-  margin:-48px auto 12px;
+  margin: -120px auto 12px;
 }
 .masc{
   position:absolute;inset:0;margin:auto;
@@ -187,7 +189,7 @@ h3{font-size:18px}
 /* === Responsive === */
 @media (max-width:900px){
   .grid2,.grid3,.cols{grid-template-columns:1fr}
-  .stack{width:220px;height:220px;margin:-40px auto 8px}
+  .stack{width:220px;height:220px;margin:-90px auto 8px}
 }
 @media (max-width:600px){
   .favicon{width:16px;height:16px}
@@ -195,6 +197,7 @@ h3{font-size:18px}
   .mainnav{gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch}
   .mainnav a{font-size:11px; letter-spacing:.04em; padding:6px 0}
   .wordmark{font-size:clamp(56px, 22vw, 200px)}   /* plus petit pour ne pas couper le "R" */
+  .stack{ margin: -70px auto 8px; }
 }
 @media (max-width:480px){
   .stack{width:180px;height:180px;margin:-28px auto 6px}
@@ -238,52 +241,51 @@ h3{font-size:18px}
 .wordmark::before,
 .wordmark::after{ content:none !important; }
 
-/* Le SVG (titre) — centré, plus grand et avec glow */
+/* Néon rouge + mouvement doux (sway/breathe) */
 .wordmark img{
   display:block;
   margin:0 auto;
-  width: clamp(320px, 70vw, 1080px);
+  width: clamp(320px, 70vw, 1080px);  /* un peu plus grand mais responsive */
   height:auto;
 
-  /* Glow néon (mono-couleur, pas d'aberration chromatique) */
+  /* halo néon (couleur = #7a0000, sans aberration chromatique) */
   filter:
-    drop-shadow(0 0 6px  rgba(228,40,40,0.7))
-    drop-shadow(0 0 14px rgba(228,40,40,0.55))
-    drop-shadow(0 0 28px rgba(228,40,40,0.35));
+    drop-shadow(0 0 6px  rgba(122,0,0,0.70))
+    drop-shadow(0 0 14px rgba(122,0,0,0.55))
+    drop-shadow(0 0 28px rgba(122,0,0,0.35));
 
-  /* Flicker doux et aléatoire façon néon fatigué */
-  animation: neon-flicker 6.5s infinite both;
+  /* clignotement irrégulier + petit mouvement */
+  animation:
+    neon-flicker 6.5s infinite both,
+    neon-sway    5.5s ease-in-out infinite;
+  transform-origin:center;
   will-change: filter, opacity, transform;
 }
 
-/* Clignotement irrégulier + micro-souffle de luminosité */
+/* clignote doucement, façon néon fatigué */
 @keyframes neon-flicker{
-  /* allumé normal */
-  0%   { opacity: 1;   filter: drop-shadow(0 0 6px  rgba(228,40,40,0.7)) drop-shadow(0 0 14px rgba(228,40,40,0.55)) drop-shadow(0 0 28px rgba(228,40,40,0.35)); }
-  6%   { opacity: .96; filter: drop-shadow(0 0 8px  rgba(228,40,40,0.75)) drop-shadow(0 0 18px rgba(228,40,40,0.6))  drop-shadow(0 0 32px rgba(228,40,40,0.4)); }
-  /* petit hoquet */
-  7%   { opacity: .65; filter: drop-shadow(0 0 2px  rgba(228,40,40,0.35)) drop-shadow(0 0 6px  rgba(228,40,40,0.25)) drop-shadow(0 0 10px rgba(228,40,40,0.15)); }
-  8%   { opacity: .98; }
-  15%  { opacity: .92; }
-  /* micro-extinction */
-  22%  { opacity: .55; filter: drop-shadow(0 0 1px rgba(228,40,40,0.25)); }
-  23%  { opacity: .97; }
-  40%  { opacity: 1; }
-  /* souffle plus long (néon qui peine) */
-  55%  { opacity: .78; filter: drop-shadow(0 0 4px rgba(228,40,40,0.5)) drop-shadow(0 0 10px rgba(228,40,40,0.35)); }
-  56%  { opacity: .9; }
-  72%  { opacity: 1; }
-  /* double clignement court */
-  82%  { opacity: .6; }
-  84%  { opacity: .98; }
-  86%  { opacity: .62; }
-  88%  { opacity: 1; }
-  100% { opacity: 1; }
+  0%   { opacity:1;   filter:drop-shadow(0 0 6px rgba(122,0,0,.70)) drop-shadow(0 0 14px rgba(122,0,0,.55)) drop-shadow(0 0 28px rgba(122,0,0,.35)); }
+  6%   { opacity:.96; filter:drop-shadow(0 0 8px rgba(122,0,0,.75)) drop-shadow(0 0 18px rgba(122,0,0,.60)) drop-shadow(0 0 32px rgba(122,0,0,.40)); }
+  7%   { opacity:.65; filter:drop-shadow(0 0 2px rgba(122,0,0,.35)) drop-shadow(0 0 6px rgba(122,0,0,.25)) drop-shadow(0 0 10px rgba(122,0,0,.15)); }
+  8%   { opacity:.98; }
+  22%  { opacity:.55; filter:drop-shadow(0 0 1px rgba(122,0,0,.25)); }
+  23%  { opacity:.97; }
+  55%  { opacity:.78; filter:drop-shadow(0 0 4px rgba(122,0,0,.50)) drop-shadow(0 0 10px rgba(122,0,0,.35)); }
+  72%  { opacity:1; }
+  82%  { opacity:.6; }
+  84%  { opacity:.98; }
+  86%  { opacity:.62; }
+  88%  { opacity:1; }
+  100% { opacity:1; }
 }
 
-/* Accessibilité : moins d’animation si demandé par l’utilisateur */
-@media (prefers-reduced-motion: reduce){
-  .wordmark img{ animation: none; }
+/* léger balancement/respiration (mouvement) */
+@keyframes neon-sway{
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  25%  { transform: translateY(-2px) rotate(-0.35deg) scale(1.006); }
+  50%  { transform: translateY(0) rotate(0deg) scale(1); }
+  75%  { transform: translateY(2px) rotate(0.35deg)  scale(1.006); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
 }
 
 
